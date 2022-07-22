@@ -1,0 +1,30 @@
+{{ with .message}}
+<h1 class="ui header large"> {{.}} </h1>
+{{ end }}
+
+   {{ range $item := .posts }}
+        {{ if $item.WorthShowing }}
+        <article data-key="{{$item.Key}}">
+            <header>
+                <a name="{{$item.Key}}">
+                <h1 class="ui header">{{$item.Title}}</h1>
+                <section class="meta-tags">
+                    <a class="ui label large blue author" href="/channel/{{$item.ChannelKey}}">{{$item.Author.Name}}</a>
+                    <span class="large ui label date">{{ $item.Date.Format "Jan 2, 2006" }}</span>
+                    <!--<span class="ui green small label">Go</span> <span class="ui green small label">Comics</span>-->
+                </section>
+            </header>
+            <section class="main-content">
+                {{$item.FullContent | html }}
+            </section>
+            <footer>
+                {{with $item.FirstLink}}
+                <a class="ui basic button" href="{{.Href}}">Source</a>
+                {{end}}
+            <div class="ui divider"></div>
+            </footer>
+        </article>
+     {{ end }}
+{{ else }}
+    No Articles
+{{ end }}
